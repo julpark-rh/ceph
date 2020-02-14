@@ -117,8 +117,8 @@ rbd pool init julius
 for pool in rbd rbdnonzero; do
     rbd create --size 200 --image-format 1 $pool/img0
     rbd create --size 200 $pool/img1 --image-feature layering
-    rbd create --size 200 --data-pool repdata $pool/img2
-    rbd create --size 200 --data-pool ecdata $pool/img3
+    rbd create --size 200 --data-pool repdata $pool/img2 --image-feature layering
+    rbd create --size 200 --data-pool ecdata $pool/img3 --image-feature layering
 done
 
 IMAGE_SIZE=$(rbd info --format=json img1 | python3 -c 'import sys, json; print(json.load(sys.stdin)["size"])')
