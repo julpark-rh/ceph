@@ -117,7 +117,6 @@ rbd pool init julius
 for pool in rbd rbdnonzero; do
     rbd create --size 200 --image-format 1 $pool/img0
     rbd create --size 200 $pool/img1
-    rbd feature disable $pool/img1 object-map fast-diff deep-flatten
     rbd create --size 200 --data-pool repdata $pool/img2
     rbd feature disable $pool/img2 object-map fast-diff deep-flatten
     rbd create --size 200 --data-pool ecdata $pool/img3
