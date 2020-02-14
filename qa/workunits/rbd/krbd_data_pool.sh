@@ -122,6 +122,7 @@ done
 
 IMAGE_SIZE=$(rbd info --format=json img1 | python3 -c 'import sys, json; print(json.load(sys.stdin)["size"])')
 OBJECT_SIZE=$(rbd info --format=json img1 | python3 -c 'import sys, json; print(json.load(sys.stdin)["object_size"])')
+
 NUM_OBJECTS=$((IMAGE_SIZE / OBJECT_SIZE))
 [[ $((IMAGE_SIZE % OBJECT_SIZE)) -eq 0 ]]
 
