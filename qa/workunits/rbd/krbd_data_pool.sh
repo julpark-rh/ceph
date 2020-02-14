@@ -8,7 +8,6 @@ function fill_image() {
     local spec=$1
     local op
     local dev
-    rbd feature disable $spec exclusive-lock object-map fast-diff deep-flatten
     dev=$(sudo rbd map $spec)
     xfs_io -c "pwrite -b $OBJECT_SIZE -S 0x78 -W 0 $IMAGE_SIZE" $dev
     sudo rbd unmap $dev
@@ -117,7 +116,7 @@ rbd pool init julius
 
 for pool in rbd rbdnonzero; do
     rbd create --size 200 --image-format 1 $pool/img0
-    rbd create --size 200 $pool/img1
+    rbd create --size 200 $pool/img1 --image-feature layering
     rbd create --size 200 --data-pool repdata $pool/img2
     rbd create --size 200 --data-pool ecdata $pool/img3
 done
