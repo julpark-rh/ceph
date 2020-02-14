@@ -8,6 +8,7 @@ function fill_image() {
     local spec=$1
     local op
     local dev
+    rbd feature disable $spec exclusive-lock object-map fast-diff deep-flatten
     dev=$(sudo rbd map $spec)
     xfs_io -c "pwrite -b $OBJECT_SIZE -S 0x78 -W 0 $IMAGE_SIZE" $dev
     sudo rbd unmap $dev
