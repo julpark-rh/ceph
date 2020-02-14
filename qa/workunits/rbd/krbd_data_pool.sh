@@ -118,9 +118,7 @@ for pool in rbd rbdnonzero; do
     rbd create --size 200 --image-format 1 $pool/img0
     rbd create --size 200 $pool/img1
     rbd create --size 200 --data-pool repdata $pool/img2
-    rbd feature disable $pool/img2 object-map fast-diff deep-flatten
     rbd create --size 200 --data-pool ecdata $pool/img3
-    rbd feature disable $pool/img3 object-map fast-diff deep-flatten
 done
 
 IMAGE_SIZE=$(rbd info --format=json img1 | python3 -c 'import sys, json; print(json.load(sys.stdin)["size"])')
