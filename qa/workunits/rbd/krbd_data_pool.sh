@@ -111,8 +111,6 @@ ceph osd pool create rbdnonzero 24 24
 rbd pool init rbdnonzero
 ceph osd pool create clonesonly 24 24
 rbd pool init clonesonly
-ceph osd pool create julius 24 24
-rbd pool init julius
 
 for pool in rbd rbdnonzero; do
     rbd create --size 200 --image-format 1 $pool/img0
