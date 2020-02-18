@@ -44,17 +44,17 @@ ceph osd pool create bar 12
 rbd pool init bar
 
 ceph osd set-require-min-compat-client nautilus
-rbd namespace create foo/ns1 --image-feature layering
-rbd namespace create foo/ns2 --image-feature layering
+rbd namespace create foo/ns1
+rbd namespace create foo/ns2
 
 SPECS=(foo/img1 foo/img2 foo/ns1/img3 foo/ns1/img4)
 
 COUNT=1
 for spec in "${SPECS[@]}"; do
     if [[ $spec =~ img1|img3 ]]; then
-        rbd create --size 10 $spec
+        rbd create --size 10 $spec --image-feature layering
     else
-        rbd create --size 10 --data-pool bar $spec
+        rbd create --size 10 --data-pool bar $spec --image-feature layering
     fi
     do_pwrite $spec 000 $(printf %03d $COUNT)
     rbd snap create $spec@snap
