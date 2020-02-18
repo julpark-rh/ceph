@@ -3,7 +3,7 @@
 set -ex
 
 function get_block_name_prefix() {
-    rbd info --format=json $1 | python -c "import sys, json; print json.load(sys.stdin)['block_name_prefix']"
+	rbd info --format=json $1 | python3 -c "import sys, json; print(json.load(sys.stdin)['block_name_prefix'])"
 }
 
 function do_pwrite() {
@@ -44,8 +44,8 @@ ceph osd pool create bar 12
 rbd pool init bar
 
 ceph osd set-require-min-compat-client nautilus
-rbd namespace create foo/ns1
-rbd namespace create foo/ns2
+rbd namespace create foo/ns1 --image-feature layering
+rbd namespace create foo/ns2 --image-feature layering
 
 SPECS=(foo/img1 foo/img2 foo/ns1/img3 foo/ns1/img4)
 
