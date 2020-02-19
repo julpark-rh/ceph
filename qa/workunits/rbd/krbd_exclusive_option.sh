@@ -59,7 +59,7 @@ IMAGE_NAME="exclusive-option-test"
 rbd create --size 1 --image-feature '' $IMAGE_NAME
 
 IMAGE_ID="$(rbd info --format=json $IMAGE_NAME |
-    python3 -c "import sys, json; print(json.load(sys.stdin)['block_name_prefix'].split('.')[1]")"
+	python3 -c "import sys, json; print( json.load(sys.stdin)['block_name_prefix'].split('.')[1])")"
 
 DEV=$(sudo rbd map $IMAGE_NAME)
 assert_unlocked
