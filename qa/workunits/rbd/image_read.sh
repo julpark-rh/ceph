@@ -325,7 +325,7 @@ function create_image() {
 
 	rbd create "${image_name}" --image-format "${FORMAT}" \
 		--size "${IMAGE_SIZE}" --order "${OBJECT_ORDER}" \
-		--image-shared
+		--image-shared --image-feature layering
 }
 
 function destroy_image() {
