@@ -40,7 +40,7 @@ dd if=/bin/rm of=/tmp/img1 bs=1k count=100 seek=1000
 dd if=/bin/ls of=/tmp/img1 bs=1k seek=10000
 dd if=/bin/ln of=/tmp/img1 bs=1k seek=100000
 dd if=/dev/zero of=/tmp/img1 count=0 seek=150000
-echo testing
+
 # import
 rbd import /tmp/img1 testimg1
 sudo rbd device map testimg1 --user $CEPH_ID $SECRET_ARGS
