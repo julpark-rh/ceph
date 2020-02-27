@@ -5,7 +5,7 @@ set -ex
 function run_test() {
     ceph osd pool create foo 12
     rbd pool init foo
-    rbd create --size 1 foo/img
+    rbd create --size 1 foo/img --image-feature layering
 
     local dev
     dev=$(sudo rbd map foo/img)
