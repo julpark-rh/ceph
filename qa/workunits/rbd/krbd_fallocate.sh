@@ -11,7 +11,7 @@ set -ex
 function py_blkdiscard() {
     local offset=$1
 
-    python <<EOF
+    python3 <<EOF
 import fcntl, struct
 BLKDISCARD = 0x1277
 with open('$DEV', 'w') as dev:
@@ -24,7 +24,7 @@ function py_fallocate() {
     local mode=$1
     local offset=$2
 
-    python <<EOF
+    python3 <<EOF
 import os, ctypes, ctypes.util
 FALLOC_FL_KEEP_SIZE = 0x01
 FALLOC_FL_PUNCH_HOLE = 0x02
@@ -63,7 +63,7 @@ EOF
 }
 
 function assert_zeroes_unaligned() {
-    local num_objects_expected=$1
+    local num_objects_expected=1
 
     cmp <(od -xAx $DEV) - <<EOF
 000000 cdcd cdcd cdcd cdcd cdcd cdcd cdcd cdcd
@@ -88,7 +88,7 @@ NUM_OBJECTS=$((IMAGE_SIZE / OBJECT_SIZE))
 [[ $((IMAGE_SIZE % OBJECT_SIZE)) -eq 0 ]]
 
 IMAGE_ID="$(rbd info --format=json $IMAGE_NAME |
-    python -c "import sys, json; print json.load(sys.stdin)['block_name_prefix'].split('.')[1]")"
+    python3 -c "import sys, json; print(json.load(sys.stdin)['block_name_prefix'].split('.')[1])")"
 
 DEV=$(sudo rbd map $IMAGE_NAME)
 
@@ -115,7 +115,7 @@ assert_zeroes 0
 # unaligned blkdev_issue_discard
 allocate
 py_blkdiscard $((OBJECT_SIZE / 2))
-assert_zeroes_unaligned $NUM_OBJECTS
+assert_zeroes_unaligned 1
 
 # unaligned blkdev_issue_zeroout w/ BLKDEV_ZERO_NOUNMAP
 allocate
